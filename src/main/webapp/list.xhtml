@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+>
+    <ui:define name="content">
+        <h:form>
+            <section class="filter">
+                <h4>#{officeBean.listSize} enregistrement(s) trouvé(s)</h4>
+                    <ui:repeat value="#{officeBean.filter_list}" var="filter">
+                        <p>#{filter.name}: #{filter.value}</p>
+                    </ui:repeat>
+                <h4>Filtre statique</h4>
+                <ul>
+                    <li class="select">
+                        <label>Arrondissement: </label>
+                        <h:selectOneMenu value = "#{officeBean.zip_code}">
+                            <f:selectItem itemValue = "75000" itemLabel = "Tous" /> <f:selectItem itemValue = "75001" itemLabel = "1" />
+                            <f:selectItem itemValue = "75002" itemLabel = "2" /> <f:selectItem itemValue = "75003" itemLabel = "3" />
+                            <f:selectItem itemValue = "75004" itemLabel = "4" /> <f:selectItem itemValue = "75005" itemLabel = "5" />
+                            <f:selectItem itemValue = "75006" itemLabel = "6" /> <f:selectItem itemValue = "75007" itemLabel = "7" />
+                            <f:selectItem itemValue = "75008" itemLabel = "8" /> <f:selectItem itemValue = "75009" itemLabel = "9" />
+                            <f:selectItem itemValue = "75010" itemLabel = "10" /> <f:selectItem itemValue = "75011" itemLabel = "11" />
+                            <f:selectItem itemValue = "75012" itemLabel = "12" /> <f:selectItem itemValue = "75013" itemLabel = "13" />
+                            <f:selectItem itemValue = "75014" itemLabel = "14" /> <f:selectItem itemValue = "75015" itemLabel = "15" />
+                            <f:selectItem itemValue = "75016" itemLabel = "16" /> <f:selectItem itemValue = "75017" itemLabel = "17" />
+                            <f:selectItem itemValue = "75018" itemLabel = "18" /> <f:selectItem itemValue = "75019" itemLabel = "19" />
+                            <f:selectItem itemValue = "75020" itemLabel = "20" />
+                            <f:ajax render="@form" />
+                        </h:selectOneMenu>
+                    </li>
+                </ul>
+
+            </section>
+
+            <section class="contenu">
+                <h2>Adresse</h2>
+                <div id="scrolltable">
+
+                    <p:dataTable var="office" value="#{officeBean.office_list}">
+
+                        <p:column sortBy="#{office.office_number}">
+                            <f:facet name="header">
+                                <h:outputText value="Numéro bureau" />
+                            </f:facet>
+                            <h:outputText value="#{office.office_number}" />
+                        </p:column>
+
+                        <p:column sortBy="#{office.name}">
+                            <f:facet name="header">
+                                <f:facet name="header">
+                                    <h:outputText value="Nom bureau" />
+                                </f:facet>
+                            </f:facet>
+                            <h:outputText value="#{office.name}" />
+                        </p:column>
+
+                        <p:column sortBy="#{office.street_number}">
+                            <f:facet name="header">
+                                <f:facet name="header">
+                                    <h:outputText value="Numéro bureau" />
+                                </f:facet>
+                            </f:facet>
+                            <h:outputText value="#{office.street_number}" />
+                        </p:column>
+
+                        <p:column sortBy="#{office.street_name}">
+                            <f:facet name="header">
+                                <f:facet name="header">
+                                    <h:outputText value="Nom rue" />
+                                </f:facet>
+                            </f:facet>
+                            <h:outputText value="#{office.street_name}" />
+                        </p:column>
+
+                        <p:column sortBy="#{office.zip_code}">
+                            <f:facet name="header">
+                                <f:facet name="header">
+                                    <h:outputText value="Code postal" />
+                                </f:facet>
+                            </f:facet>
+                            <h:outputText value="#{office.zip_code}" />
+                        </p:column>
+
+                    </p:dataTable>
+
+                </div>
+            </section>
+        </h:form>
+    </ui:define>
+
+    <ui:define name="h1">
+        Listes des bureaux de vote
+    </ui:define>
+
+</ui:composition>

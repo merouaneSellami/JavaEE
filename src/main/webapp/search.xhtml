@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<ui:composition template="/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+>
+    <ui:define name="content">
+
+        <div style="background-color: white;padding-top: 7px">
+            <div class="ui-g ui-g-nopad">
+                <div class="ui-g-12 ui-md-1 ui-lg-1 ui-g-nopad">
+                </div>
+
+                <div class="ui-g-12 ui-md-5 ui-lg-3 ui-g-nopad" style="height:400px;">
+                    <div style="vertical-align:middle;">
+                        <div style="height: 100px;"/>
+                        <h4>Tapez votre adresse</h4>
+                        <h:form>
+                            <h:panelGrid columns="2" cellpadding="5">
+
+                                <p:outputLabel value="Nom rue:" for="street_name" />
+                                <p:autoComplete id="street_name" minQueryLength="3" effect="fade" maxResults="8" unique="true"
+                                                value="#{addressBean.typed_street_name}"
+                                                placeholder="ex: Rue Vignon"
+                                                emptyMessage="aucun resultat trouvé"
+                                                completeMethod="#{addressBean.get_suggested_address_list(1)}" var="name"
+                                                itemLabel="#{name}"
+                                                itemValue="#{name}"
+                                >
+                                    <f:ajax event="keyup" execute="@this"/>
+                                    <f:ajax event="focus" execute="@this"/>
+                                </p:autoComplete>
+
+
+                                <p:outputLabel value="Numero rue:" for="street_number" />
+                                <p:autoComplete id="street_number" effect="fade" maxResults="8" unique="true"
+                                                value="#{addressBean.typed_street_number}"
+                                                placeholder="ex: 35"
+                                                emptyMessage="aucun resultat trouvé"
+                                                completeMethod="#{addressBean.get_suggested_address_list(2)}" var="number"
+                                                itemLabel="#{number}"
+                                                itemValue="#{number}"
+                                >
+                                    <f:ajax event="keyup" execute="@this"/>
+                                    <f:ajax event="focus" execute="@this"/>
+                                </p:autoComplete>
+
+                                <p:outputLabel value="Code postale:" for="zip_code" />
+                                <p:autoComplete id="zip_code" effect="fade" maxResults="8" unique="true"
+                                                value="#{addressBean.typed_zip_code}" placeholder="ex: 75005"
+                                                emptyMessage="aucun resultat trouvé"
+                                                completeMethod="#{addressBean.get_suggested_address_list(3)}" var="zip"
+                                                itemLabel="#{zip}"
+                                                itemValue="#{zip}"
+                                >
+                                    <f:ajax event="keyup" execute="@this"/>
+                                    <f:ajax event="focus" execute="@this"/>
+                                </p:autoComplete>
+
+                                <p:commandButton  value="Rechercher" icon="fa fa-search"
+                                                  action="#{mapBean.searchAddressAndShow}" />
+                                <p:commandButton value="Afficher tout les bureaux de vote" icon="fa fa-times"
+                                                 action="#{mapBean.showAllOffice}"
+                                />
+
+                            </h:panelGrid>
+
+
+                        </h:form>
+                    </div>
+                </div>
+
+                <div class="ui-g-12 ui-md-5 ui-lg-7 ui-g-nopad">
+                    <p:gmap id="gmapid" center="#{mapBean.centerMapCoordinate}" zoom="12" type="terrain"
+                            style="width:700px;height:100%;float:right;" model="#{mapBean.mapModel}" >
+                    </p:gmap>
+                </div>
+
+                <div class="ui-g-12 ui-md-1 ui-lg-1 ui-g-nopad">
+                </div>
+            </div>
+
+            <div class="ui-g ui-g-nopad">
+                <div class="ui-g-2 ui-g-nopad">
+                </div>
+                <div jsf:id="messageid" class="ui-g-8 ui-g-nopad" style="text-align: center; border: 2px; color: #{mapBean.color};">
+                    <h4>#{mapBean.message}</h4>
+                </div>
+                <div class="ui-g-2 ui-g-nopad">
+                </div>
+            </div>
+        </div>
+    </ui:define>
+
+    <ui:define name="h1">
+        Rechercher votre bureaux de vote
+    </ui:define>
+
+</ui:composition>
